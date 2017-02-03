@@ -1,0 +1,22 @@
+#include "tws-networking.h"
+
+/////////////////////////////////
+// Exported Variables
+/////////////////////////////////
+TWSNETWORKING_API int TWS::Networking::example_var = 0;
+
+/////////////////////////////////
+// Exported Functions
+/////////////////////////////////
+TWSNETWORKING_API int TWS::Networking::example_function(void)
+{
+    return 42;
+}
+
+/////////////////////////////////
+// Exported Classes
+/////////////////////////////////
+TWS::Networking::API::API()
+{
+    return;
+}
