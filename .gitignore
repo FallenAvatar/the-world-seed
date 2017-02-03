@@ -3,6 +3,8 @@
 *.lo
 *.o
 *.obj
+obj/
+*/obj/
 
 # Precompiled Headers
 *.gch
@@ -12,10 +14,6 @@
 *.so
 *.dylib
 *.dll
-
-# Fortran module files
-*.mod
-*.smod
 
 # Compiled Static libraries
 *.lai
@@ -27,5 +25,8 @@
 *.exe
 *.out
 *.app
+
+# User specific files
 *.opendb
 *.user
+*.suo
