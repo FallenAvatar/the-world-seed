@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="platform">
+      <UniqueIdentifier>{7e8f3e66-d156-4462-b00c-2504baa44f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\windows">
+      <UniqueIdentifier>{008cb77b-555c-4dcc-a797-65c19fa12422}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\msvc">
+      <UniqueIdentifier>{fdf16a3b-856f-42d2-b6d0-7801364b32fe}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="platform\platform.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\windows\windows.h">
+      <Filter>platform\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h" />
+    <ClInclude Include="platform\msvc\msvc.h">
+      <Filter>platform\msvc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+</Project>

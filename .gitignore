@@ -3,8 +3,7 @@
 *.lo
 *.o
 *.obj
-obj/
-*/obj/
+obj
 
 # Precompiled Headers
 *.gch
@@ -30,3 +29,7 @@ obj/
 *.opendb
 *.user
 *.suo
+.vs
+
+# Build
+bin
