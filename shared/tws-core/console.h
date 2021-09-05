@@ -4,7 +4,7 @@
 
 #include "common.h"
 
-namespace engine {
+namespace tws::core {
 	class console {
 	public:
 		static bool RedirectConsoleIO();

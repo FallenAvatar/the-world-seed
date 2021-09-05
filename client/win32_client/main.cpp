@@ -1,6 +1,6 @@
 
 
-#include "engine/common.h"
+#include "tws-client/common.h"
 #include <iostream>
 #include <conio.h>
 #include <Eigen/Dense>
@@ -11,7 +11,7 @@ int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	UNREFERENCED_PARAMETER( hPrevInstance );
 	UNREFERENCED_PARAMETER( lpCmdLine );
 
-	if( !tws::console::CreateNewConsole( 1024 ) )
+	if( !tws::core::console::CreateNewConsole( 1024 ) )
 		return 1;
 
 	MatrixXd m( 2, 2 );
