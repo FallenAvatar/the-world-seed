@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ED66D85B-51A1-4F6C-90E0-3F0E194D0B6E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>twsnetworking</RootNamespace>
+    <RootNamespace>tws::net</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
