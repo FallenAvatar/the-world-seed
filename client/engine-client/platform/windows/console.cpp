@@ -1,6 +1,6 @@
-#include "console.h"
+#include "../../console.h"
 
-bool engine::console::RedirectConsoleIO() {
+bool tws::console::RedirectConsoleIO() {
 	bool result = true;
 	FILE* fp;
 
@@ -39,7 +39,7 @@ bool engine::console::RedirectConsoleIO() {
 	return result;
 }
 
-bool engine::console::ReleaseConsole() {
+bool tws::console::ReleaseConsole() {
 	bool result = true;
 	FILE* fp;
 
@@ -70,7 +70,7 @@ bool engine::console::ReleaseConsole() {
 	return result;
 }
 
-void engine::console::AdjustConsoleBuffer( int16_t minLength ) {
+void tws::console::AdjustConsoleBuffer( int16_t minLength ) {
 	// Set the screen buffer to be big enough to scroll some text
 	CONSOLE_SCREEN_BUFFER_INFO conInfo;
 	GetConsoleScreenBufferInfo( GetStdHandle( STD_OUTPUT_HANDLE ), &conInfo );
@@ -79,7 +79,7 @@ void engine::console::AdjustConsoleBuffer( int16_t minLength ) {
 	SetConsoleScreenBufferSize( GetStdHandle( STD_OUTPUT_HANDLE ), conInfo.dwSize );
 }
 
-bool engine::console::CreateNewConsole( int16_t minLength ) {
+bool tws::console::CreateNewConsole( int16_t minLength ) {
 	bool result = false;
 
 	// Release any current console and redirect IO to NUL

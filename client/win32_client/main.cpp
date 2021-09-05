@@ -11,7 +11,7 @@ int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	UNREFERENCED_PARAMETER( hPrevInstance );
 	UNREFERENCED_PARAMETER( lpCmdLine );
 
-	if( !engine::console::CreateNewConsole( 1024 ) )
+	if( !tws::console::CreateNewConsole( 1024 ) )
 		return 1;
 
 	MatrixXd m( 2, 2 );
