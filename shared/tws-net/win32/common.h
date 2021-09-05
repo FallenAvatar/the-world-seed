@@ -9,7 +9,7 @@
 #include <windows.h>
 
 #ifdef TWSNETWORKING_EXPORTS
-#define TWSNETWORKING_API __declspec(dllexport)
+#define TWS_NET_API __declspec(dllexport)
 #else
-#define TWSNETWORKING_API __declspec(dllimport)
+#define TWS_NET_API __declspec(dllimport)
 #endif

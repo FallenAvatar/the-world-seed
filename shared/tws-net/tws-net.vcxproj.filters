@@ -8,13 +8,11 @@
     <ClInclude Include="win32\targetver.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="tws-networking.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="win32\dllmain.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="tws-networking.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="win32">

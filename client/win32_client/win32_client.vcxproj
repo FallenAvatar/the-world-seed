@@ -104,7 +104,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>$(SolutionDir)bin\engine\$(PlatformTarget)\$(Configuration)\engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)bin\tws-client\$(PlatformTarget)\$(Configuration)\tws-client.lib;$(SolutionDir)bin\tws-core\$(PlatformTarget)\$(Configuration)\tws-core.lib;$(SolutionDir)bin\tws-net\$(PlatformTarget)\$(Configuration)\tws-net.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -153,7 +153,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)bin\engine\$(PlatformTarget)\$(Configuration)\engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)bin\tws-client\$(PlatformTarget)\$(Configuration)\tws-client.lib;$(SolutionDir)bin\tws-core\$(PlatformTarget)\$(Configuration)\tws-core.lib;$(SolutionDir)bin\tws-net\$(PlatformTarget)\$(Configuration)\tws-net.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
