@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{CEAEE6B2-C6C3-492B-A47D-F03B063602E3}"
 EndProject
@@ -25,7 +25,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "engine", "client\engine\eng
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win32_client", "client\win32_client\win32_client.vcxproj", "{C339B2C0-ACE9-405E-9A2B-D061EAE59152}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_libs", "_libs", "{33ABA0A8-FF8C-4AA3-89C2-5A23C6882F2D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eigen", "lib\Eigen.vcxitems", "{250C6684-66D3-4CD2-BC47-63DBE49BD3A1}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		lib\Eigen.vcxitems*{250c6684-66d3-4cd2-bc47-63dbe49bd3a1}*SharedItemsImports = 9
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
@@ -66,6 +73,7 @@ Global
 		{2443B2A5-6314-4888-8CD8-415582DB2F2D} = {C670F22F-9A1D-4008-BA3D-8B4B1C4D331C}
 		{982DA832-9E65-4632-99DD-3ECE5FF7128F} = {5FD041F4-0366-4ABB-A8A8-C3126AB0CB7A}
 		{C339B2C0-ACE9-405E-9A2B-D061EAE59152} = {5FD041F4-0366-4ABB-A8A8-C3126AB0CB7A}
+		{250C6684-66D3-4CD2-BC47-63DBE49BD3A1} = {33ABA0A8-FF8C-4AA3-89C2-5A23C6882F2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {554E2959-52E0-4129-90E5-6AE871E6A91A}

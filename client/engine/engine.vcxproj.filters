@@ -22,8 +22,15 @@
     <ClInclude Include="platform\msvc\msvc.h">
       <Filter>platform\msvc</Filter>
     </ClInclude>
+    <ClInclude Include="engine.h" />
+    <ClInclude Include="console.h">
+      <Filter>platform\windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="engine.cpp" />
+    <ClCompile Include="console.cpp">
+      <Filter>platform\windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -9,4 +9,6 @@
 #include <SDKDDKVer.h>
 #include <windows.h>
 
+#include "console.h"
+
 #endif // __PLATFORM_WINDOWS_H__
