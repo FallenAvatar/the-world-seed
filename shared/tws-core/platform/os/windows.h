@@ -1,5 +1,4 @@
-#ifndef __PLATFORM_WINDOWS_H__
-#define __PLATFORM_WINDOWS_H__
+#pragma once
 
 #define VC_EXTRALEAN
 #define WIN32_LEAN_AND_MEAN
@@ -9,4 +8,4 @@
 #include <SDKDDKVer.h>
 #include <windows.h>
 
-#endif // __PLATFORM_WINDOWS_H__
+#include "./windows/winplatinfo.h"

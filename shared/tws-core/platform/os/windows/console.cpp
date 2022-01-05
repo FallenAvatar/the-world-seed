@@ -1,6 +1,6 @@
-#include "../../console.h"
+#include "../../../console.h"
 
-bool tws::console::RedirectConsoleIO() {
+bool tws::core::Console::RedirectConsoleIO() {
 	bool result = true;
 	FILE* fp;
 
@@ -39,7 +39,7 @@ bool tws::console::RedirectConsoleIO() {
 	return result;
 }
 
-bool tws::console::ReleaseConsole() {
+bool tws::core::Console::ReleaseConsole() {
 	bool result = true;
 	FILE* fp;
 
@@ -70,7 +70,7 @@ bool tws::console::ReleaseConsole() {
 	return result;
 }
 
-void tws::console::AdjustConsoleBuffer( int16_t minLength ) {
+void tws::core::Console::AdjustConsoleBuffer( int16_t minLength ) {
 	// Set the screen buffer to be big enough to scroll some text
 	CONSOLE_SCREEN_BUFFER_INFO conInfo;
 	GetConsoleScreenBufferInfo( GetStdHandle( STD_OUTPUT_HANDLE ), &conInfo );
@@ -79,7 +79,7 @@ void tws::console::AdjustConsoleBuffer( int16_t minLength ) {
 	SetConsoleScreenBufferSize( GetStdHandle( STD_OUTPUT_HANDLE ), conInfo.dwSize );
 }
 
-bool tws::console::CreateNewConsole( int16_t minLength ) {
+bool tws::core::Console::CreateNewConsole( int16_t minLength ) {
 	bool result = false;
 
 	// Release any current console and redirect IO to NUL

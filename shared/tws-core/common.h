@@ -1,7 +1,5 @@
-#ifndef __COMMON_H__
-#define __COMMON_H__
+#pragma once
 
-#include "./platform/platform.h"
+#include "./property.h"
+#include "./platform.h"
 #include "./console.h"
-
-#endif // __COMMON_H__

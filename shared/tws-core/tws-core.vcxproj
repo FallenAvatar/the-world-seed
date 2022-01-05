@@ -21,12 +21,15 @@
   <ItemGroup>
     <ClInclude Include="common.h" />
     <ClInclude Include="console.h" />
-    <ClInclude Include="platform\msvc\msvc.h" />
-    <ClInclude Include="platform\platform.h" />
-    <ClInclude Include="platform\windows\windows.h" />
+    <ClInclude Include="platform\compiler\msvc.h" />
+    <ClInclude Include="platform.h" />
+    <ClInclude Include="platform\platinfo.h" />
+    <ClInclude Include="platform\os\windows.h" />
+    <ClInclude Include="platform\os\windows\winplatinfo.h" />
+    <ClInclude Include="property.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="platform\windows\console.cpp" />
+    <ClCompile Include="platform\os\windows\console.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -142,7 +145,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeaderOutputFile />
     </ClCompile>

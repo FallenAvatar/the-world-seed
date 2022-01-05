@@ -12,21 +12,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="platform\platform.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\windows\windows.h">
-      <Filter>platform\windows</Filter>
-    </ClInclude>
     <ClInclude Include="common.h" />
-    <ClInclude Include="platform\msvc\msvc.h">
-      <Filter>platform\msvc</Filter>
-    </ClInclude>
-    <ClInclude Include="console.h" />
+    <ClInclude Include="platui\window.h" />
+    <ClInclude Include="platui\window-manager.h" />
+    <ClInclude Include="platform.h" />
+    <ClInclude Include="platform\compiler\msvc.h" />
+    <ClInclude Include="platform\os\windows.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="platform\windows\console.cpp">
-      <Filter>platform\windows</Filter>
-    </ClCompile>
+    <ClCompile Include="platform\os\windows\platui\window.cpp" />
   </ItemGroup>
 </Project>

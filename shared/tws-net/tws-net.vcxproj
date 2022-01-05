@@ -175,16 +175,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
-    <ClInclude Include="win32\common.h" />
-    <ClInclude Include="win32\targetver.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="win32\dllmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tws-core\tws-core.vcxproj">
       <Project>{3ac50e9c-04d4-411b-b819-de539b7b28d7}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="net.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

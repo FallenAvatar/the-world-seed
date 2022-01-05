@@ -1,18 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="win32\common.h">
-      <Filter>win32</Filter>
-    </ClInclude>
     <ClInclude Include="common.h" />
-    <ClInclude Include="win32\targetver.h">
-      <Filter>win32</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="win32\dllmain.cpp">
-      <Filter>win32</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="win32">
@@ -21,5 +10,8 @@
     <Filter Include="api">
       <UniqueIdentifier>{9508c9b1-a3f7-4e04-adfd-4c9c66039f84}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="net.cpp" />
   </ItemGroup>
 </Project>

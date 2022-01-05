@@ -1,29 +1,21 @@
 
 
-#include "tws-core/common.h"
-#include "tws-client/common.h"
-#include <iostream>
-#include <conio.h>
-#include <Eigen/Dense>
-
-using Eigen::MatrixXd;
+#include <tws-core/common.h>
+#include <tws-client/common.h>
 
 int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow ) {
 	UNREFERENCED_PARAMETER( hPrevInstance );
 	UNREFERENCED_PARAMETER( lpCmdLine );
 
-	if( !tws::core::console::CreateNewConsole( 1024 ) )
+	tws::core::platform::windows::WinPlatInfo::Create( hInstance );
+
+#ifdef _DEBUG
+	if( !tws::core::Console::CreateNewConsole( 1024 ) )
 		return 1;
+#endif // _DEBUG
 
-	MatrixXd m( 2, 2 );
-	m( 0, 0 ) = 3;
-	m( 1, 0 ) = 2.5;
-	m( 0, 1 ) = -1;
-	m( 1, 1 ) = m( 1, 0 ) + m( 0, 1 );
-	std::cout << m << std::endl << std::flush;
-
-	std::cout << "Press any key to continue..." << std::flush;
-	_getch();
+	while( tws::client::platui::g_winMgr.StillRunning() )
+		tws::client::platui::g_winMgr.MessageLoop();
 
 	return 0;
 }

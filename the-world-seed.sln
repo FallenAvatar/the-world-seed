@@ -17,12 +17,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wiki", "wiki", "{2443B2A5-6
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win32_client", "client\win32_client\win32_client.vcxproj", "{C339B2C0-ACE9-405E-9A2B-D061EAE59152}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ED66D85B-51A1-4F6C-90E0-3F0E194D0B6E} = {ED66D85B-51A1-4F6C-90E0-3F0E194D0B6E}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_libs", "_libs", "{33ABA0A8-FF8C-4AA3-89C2-5A23C6882F2D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eigen", "lib\Eigen.vcxitems", "{250C6684-66D3-4CD2-BC47-63DBE49BD3A1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tws-client", "client\tws-client\tws-client.vcxproj", "{982DA832-9E65-4632-99DD-3ECE5FF7128F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ED66D85B-51A1-4F6C-90E0-3F0E194D0B6E} = {ED66D85B-51A1-4F6C-90E0-3F0E194D0B6E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tws-core", "shared\tws-core\tws-core.vcxproj", "{3AC50E9C-04D4-411B-B819-DE539B7B28D7}"
 EndProject
