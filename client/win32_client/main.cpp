@@ -14,8 +14,13 @@ int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		return 1;
 #endif // _DEBUG
 
+	// TODO: Init Platform
+
+	// Main thread message loop
 	while( tws::client::platui::g_winMgr.StillRunning() )
 		tws::client::platui::g_winMgr.MessageLoop();
+
+	// TODO: Replace above with Run function and call
 
 	return 0;
 }

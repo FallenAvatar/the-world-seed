@@ -18,8 +18,10 @@
     <ClInclude Include="platform.h" />
     <ClInclude Include="platform\compiler\msvc.h" />
     <ClInclude Include="platform\os\windows.h" />
+    <ClInclude Include="engine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="platform\os\windows\platui\window.cpp" />
+    <ClCompile Include="engine.cpp" />
   </ItemGroup>
 </Project>
