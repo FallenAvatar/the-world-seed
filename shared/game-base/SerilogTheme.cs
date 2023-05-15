@@ -4,7 +4,7 @@ using System.Text;
 
 using Serilog.Sinks.SystemConsole.Themes;
 
-namespace tws.game.lib;
+namespace tws.game;
 public static class SerilogTheme {
 	public static SystemConsoleTheme Custom { get; } = new SystemConsoleTheme(
 		new Dictionary<ConsoleThemeStyle, SystemConsoleThemeStyle> {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace tws.game.lib;
+namespace tws.game.Extensions;
 public static class DateTimeExtensions {
 	private static DateTime? _epoch;
 	private static DateTime CheckedEpochUTC {
@@ -15,10 +15,10 @@ public static class DateTimeExtensions {
 	public static DateTime EpochUTC { get { return CheckedEpochUTC; } }
 
 	public static double UnixTimestamp( this DateTime dt ) {
-		return ((dt - CheckedEpochUTC.ToLocalTime()).TotalSeconds);
+		return (dt - CheckedEpochUTC.ToLocalTime()).TotalSeconds;
 	}
 
 	public static double UnixTimestampUTC( this DateTime dt ) {
-		return ((dt - CheckedEpochUTC).TotalSeconds);
+		return (dt - CheckedEpochUTC).TotalSeconds;
 	}
 }

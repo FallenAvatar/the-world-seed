@@ -20,7 +20,9 @@ public static class Utils {
 	}
 
 	public static Thread RunThread( Action<CancellationToken> action, CancellationToken ct ) {
+#pragma warning disable CS8605 // Unboxing a possibly null value.
 		var t = new Thread( ( o ) => action( (CancellationToken)o ) );
+#pragma warning restore CS8605 // Unboxing a possibly null value.
 		t.Start( ct );
 
 		return t;

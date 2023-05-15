@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace tws.auth;
+namespace tws.server.auth;
 
 internal class Program {
 	static void Main( string[] args ) {

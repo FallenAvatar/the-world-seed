@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace tws.server.shard;
+namespace tws.server.world;
 
 internal class Program {
 	static void Main( string[] args ) {

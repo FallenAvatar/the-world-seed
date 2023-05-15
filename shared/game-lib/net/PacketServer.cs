@@ -14,8 +14,7 @@ namespace tws.game.lib.net;
 public abstract class PacketServer : IPacketSender {
 	public const int MTU = 1400;
 
-	public static ILogger Logger;
-
+	protected readonly ILogger logger;
 	protected readonly Socket serverSocket;
 	protected readonly IPEndPoint listenEndpoint;
 	protected BufferBlock<Packet?> incomingPackets = new();
@@ -24,11 +23,11 @@ public abstract class PacketServer : IPacketSender {
 
 	public bool IsRunning { get; protected set; }
 
-	public PacketServer( ushort port ) {
+	public PacketServer( ushort port, ILogger _logger ) {
+		logger = _logger;
 		listenEndpoint = new IPEndPoint( IPAddress.Any, port );
 		serverSocket = new Socket( AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp );
 	}
-
 
 	protected virtual void HandleCommand( string line ) {
 		if( line.Trim().StartsWith( "exit" ) ) {
@@ -86,7 +85,7 @@ public abstract class PacketServer : IPacketSender {
 		serverSocket.SetSocketOption( SocketOptionLevel.IP, SocketOptionName.PacketInformation, true );
 		serverSocket.Bind( listenEndpoint );
 
-		Logger.Information( "Listening on {0}", listenEndpoint );
+		logger.Information( "Listening on {0}", listenEndpoint );
 
 		byte[] buffer = new byte[MTU * 10];
 		EndPoint remoteEP = new IPEndPoint( IPAddress.Any, 0 );
@@ -111,7 +110,7 @@ public abstract class PacketServer : IPacketSender {
 					remoteEP = new IPEndPoint( IPAddress.Any, 0 );
 				}
 			} catch( Exception ex ) {
-				Logger.Error( ex, "Error {0}", "listenThread" );
+				logger.Error( ex, "Error {0}", "listenThread" );
 			}
 
 			_ = Thread.Yield();
