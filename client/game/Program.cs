@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 
-namespace tws.game;
+namespace ExampleGame;
 
 internal class Program {
-	static void Main( string[] args ) {
-		Console.WriteLine( "Hello, World!" );
+	static async Task<int> Main( string[] args ) {
+
 	}
 }

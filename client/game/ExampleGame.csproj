@@ -5,12 +5,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>tws.game</RootNamespace>
+    <RootNamespace>ExampleGame</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Silk.NET" Version="2.17.1" />
+    <ProjectReference Include="..\..\shared\game-base\game-base.csproj" />
   </ItemGroup>
 
 </Project>
