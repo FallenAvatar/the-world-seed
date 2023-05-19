@@ -6,11 +6,34 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>ExampleGame</RootNamespace>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\shared\game-base\game-base.csproj" />
-    <ProjectReference Include="..\game-client\game-client.csproj" />
+    <None Remove="assets\cube.model" />
+    <None Remove="assets\shader.frag" />
+    <None Remove="assets\shader.vert" />
+    <None Remove="assets\silk.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="assets\cube.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\shader.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\shader.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\silk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\shared\tws.game\tws.game.csproj" />
+    <ProjectReference Include="..\tws.game.client\tws.game.client.csproj" />
   </ItemGroup>
 
 </Project>

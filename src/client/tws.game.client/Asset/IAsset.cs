@@ -5,7 +5,5 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace tws.game.client.Renderer;
-public interface IRenderer : IDisposable, IAsyncDisposable {
-	Task Init();
-	Task Render();
+public interface IAsset : IDisposable, IAsyncDisposable {
 }

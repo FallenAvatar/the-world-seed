@@ -5,15 +5,22 @@
     <RootNamespace>tws.game.client</RootNamespace>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Silk.NET" Version="2.17.1" />
+    <PackageReference Include="Silk.NET.Assimp" Version="2.17.1" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\shared\game-base\game-base.csproj" />
-    <ProjectReference Include="..\..\shared\game-lib\game-lib.csproj" />
+    <ProjectReference Include="..\..\shared\tws.game.lib\tws.game.lib.csproj" />
+    <ProjectReference Include="..\..\shared\tws.game\tws.game.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Input\" />
   </ItemGroup>
 
 </Project>

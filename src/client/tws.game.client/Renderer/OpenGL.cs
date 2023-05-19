@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace tws.game.client.Renderer;
-public class OpenGL : IRenderer {
-	public OpenGL() { }
-	public void Dispose() { }
+using Silk.NET.SDL;
+using tws.game.client.State;
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-	public async Task Init() { }
-	public async Task Render() { }
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+namespace tws.game.client.Renderer;
+public class OpenGL : BaseRenderer {
+	public OpenGL() { }
+
+	protected override async ValueTask DisposeAsyncCore() { await base.DisposeAsyncCore(); }
+
+	public override async Task Init() { await Task.CompletedTask; }
+	public override async Task Render() { await Task.CompletedTask; }
 }
