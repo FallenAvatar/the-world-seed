@@ -16,7 +16,7 @@ public abstract class BaseGameState : IGameState {
 	public async ValueTask DisposeAsync() { await DisposeAsyncCore().ConfigureAwait( false ); GC.SuppressFinalize( this ); }
 	protected virtual async ValueTask DisposeAsyncCore() { await Task.CompletedTask; }
 
-	public async virtual Task<IGameState> Render( IRenderer renderer ) { await Task.CompletedTask; return this;  }
+	public abstract Task<IGameState> Render( IRenderer renderer );
 
-	public async virtual Task<IGameState> Update( double dt ) { await Task.Delay( (int)(500.0 / PhysicsUpdatesPerSecond) ); return this; } // 500 instead of 1000 to allow for render time
+	public abstract Task<IGameState> Update( double dt );
 }

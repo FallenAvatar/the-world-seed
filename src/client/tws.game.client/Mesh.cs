@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Silk.NET.OpenGL;
 
 namespace tws.game.client;
 public class Mesh : IDisposable {
+	public float[] Vertices { get; private set; }
+	public uint[] Indices { get; private set; }
+	public IReadOnlyList<Texture>? Textures { get; private set; }
+	public VertexArrayObject<float, uint>? VAO { get; set; }
+	public BufferObject<float>? VBO { get; set; }
+	public BufferObject<uint>? EBO { get; set; }
+	public GL GL { get; }
+
 	public Mesh( GL gl, float[] vertices, uint[] indices, List<Texture> textures ) {
 		GL = gl;
 		Vertices = vertices;
@@ -15,16 +20,14 @@ public class Mesh : IDisposable {
 		Textures = textures;
 		SetupMesh();
 	}
+	public void Dispose() {
+		Textures = null;
+		if( VAO != null ) { VAO.Dispose(); VAO = null; };
+		if( VBO != null ) { VBO.Dispose(); VBO = null; };
+		if( EBO != null ) { EBO.Dispose(); EBO = null; };
+	}
 
-	public float[] Vertices { get; private set; }
-	public uint[] Indices { get; private set; }
-	public IReadOnlyList<Texture> Textures { get; private set; }
-	public VertexArrayObject<float, uint> VAO { get; set; }
-	public BufferObject<float> VBO { get; set; }
-	public BufferObject<uint> EBO { get; set; }
-	public GL GL { get; }
-
-	public unsafe void SetupMesh() {
+	public void SetupMesh() {
 		EBO = new BufferObject<uint>( GL, Indices, BufferTargetARB.ElementArrayBuffer );
 		VBO = new BufferObject<float>( GL, Vertices, BufferTargetARB.ArrayBuffer );
 		VAO = new VertexArrayObject<float, uint>( GL, VBO, EBO );
@@ -33,13 +36,8 @@ public class Mesh : IDisposable {
 	}
 
 	public void Bind() {
-		VAO.Bind();
-	}
+		if( VAO == null ) throw new NullReferenceException("Cannot bind a mesh with a null VAO.");
 
-	public void Dispose() {
-		Textures = null;
-		VAO.Dispose();
-		VBO.Dispose();
-		EBO.Dispose();
+		VAO.Bind();
 	}
 }

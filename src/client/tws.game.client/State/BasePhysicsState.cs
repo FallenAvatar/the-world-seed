@@ -10,7 +10,7 @@ namespace tws.game.client.State;
 public abstract class BasePhysicsState : BaseGameState {
 	protected double accum = 0.0;
 
-	public async virtual Task<IGameState> Update( double dt ) {
+	public override async Task<IGameState> Update( double dt ) {
 		double frameTime = dt;
 		IGameState ret = this;
 

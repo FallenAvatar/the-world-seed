@@ -2,20 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 using Silk.NET.Assimp;
 using Silk.NET.OpenGL;
-using Silk.NET.SDL;
-
-using static System.Formats.Asn1.AsnWriter;
 
 namespace tws.game.client;
 public class Model : IDisposable {
 	public Model( GL gl, string path, bool gamma = false ) {
-		var assimp = Silk.NET.Assimp.Assimp.GetApi();
+		var assimp = Assimp.GetApi();
 		_assimp = assimp;
 		_gl = gl;
 		LoadModel( path );
@@ -23,14 +17,14 @@ public class Model : IDisposable {
 
 	private readonly GL _gl;
 	private Assimp _assimp;
-	private List<Texture> _texturesLoaded = new List<Texture>();
+	private List<Texture> _texturesLoaded = new();
 	public string Directory { get; protected set; } = string.Empty;
-	public List<Mesh> Meshes { get; protected set; } = new List<Mesh>();
+	public List<Mesh> Meshes { get; protected set; } = new();
 
 	private unsafe void LoadModel( string path ) {
 		var scene = _assimp.ImportFile( path, (uint)PostProcessSteps.Triangulate );
 
-		if( scene == null || scene->MFlags == Silk.NET.Assimp.Assimp.SceneFlagsIncomplete || scene->MRootNode == null ) {
+		if( scene == null || scene->MFlags == Assimp.SceneFlagsIncomplete || scene->MRootNode == null ) {
 			var error = _assimp.GetErrorStringS();
 			throw new Exception( error );
 		}
@@ -52,16 +46,16 @@ public class Model : IDisposable {
 
 	private unsafe Mesh ProcessMesh( Silk.NET.Assimp.Mesh* mesh, Scene* scene ) {
 		// data to fill
-		List<Vertex> vertices = new List<Vertex>();
-		List<uint> indices = new List<uint>();
-		List<Texture> textures = new List<Texture>();
+		var vertices = new List<Vertex>();
+		var indices = new List<uint>();
+		var textures = new List<Texture>();
 
 		// walk through each of the mesh's vertices
 		for( uint i = 0; i < mesh->MNumVertices; i++ ) {
-			Vertex vertex = new Vertex();
+			var vertex = new Vertex();
 			vertex.BoneIds = new int[Vertex.MAX_BONE_INFLUENCE];
 			vertex.Weights = new float[Vertex.MAX_BONE_INFLUENCE];
-			Vector3 vector = new Vector3(); // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
+			var vector = new Vector3(); // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
 											// positions
 			vector.X = mesh->MVertices[i].X;
 			vector.Y = mesh->MVertices[i].Y;
@@ -78,7 +72,7 @@ public class Model : IDisposable {
 			// texture coordinates
 			if( mesh->MTextureCoords[0] != null ) // does the mesh contain texture coordinates?
 			{
-				Vector2 vec = new Vector2();
+				var vec = new Vector2();
 				// a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't 
 				// use models where a vertex can have multiple texture coordinates so we always take the first set (0).
 				vec.X = mesh->MTextureCoords[0][i].X;
@@ -105,7 +99,7 @@ public class Model : IDisposable {
 		}
 		// now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
 		for( uint i = 0; i < mesh->MNumFaces; i++ ) {
-			Face face = mesh->MFaces[i];
+			var face = mesh->MFaces[i];
 			// retrieve all indices of the face and store them in the indices vector
 			for( uint j = 0; j < face.MNumIndices; j++ )
 				indices.Add( face.MIndices[j] );
@@ -143,7 +137,7 @@ public class Model : IDisposable {
 
 	private unsafe List<Texture> LoadMaterialTextures( Material* mat, TextureType type, string typeName ) {
 		var textureCount = _assimp.GetMaterialTextureCount( mat, type );
-		List<Texture> textures = new List<Texture>();
+		var textures = new List<Texture>();
 		for( uint i = 0; i < textureCount; i++ ) {
 			AssimpString path;
 			_ = _assimp.GetMaterialTexture( mat, type, i, &path, null, null, null, null, null, null );
@@ -188,6 +182,6 @@ public class Model : IDisposable {
 			mesh.Dispose();
 		}
 
-		_texturesLoaded = null;
+		_texturesLoaded.Clear();
 	}
 }

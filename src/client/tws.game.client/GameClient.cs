@@ -8,7 +8,7 @@ using tws.game.client.State;
 using tws.game.Extensions;
 
 namespace tws.game.client;
-public class GameClient<T> : BaseApp where T : BaseApp {
+public abstract class GameClient<T> : BaseApp where T : BaseApp {
 	private static T? instance = null;
 	public static T Instance {
 		get {
@@ -43,10 +43,7 @@ public class GameClient<T> : BaseApp where T : BaseApp {
 			currDT = DateTime.Now.UnixTimestamp();
 			delta = currDT - lastDT;
 
-			gameState = await gameState.Update(delta);
-
-			if( renderer != null )
-				gameState = await gameState.Render( renderer );
+			gameState = await Frame(delta);
 
 			if( isNoGC )
 				GC.EndNoGCRegion();
@@ -56,5 +53,20 @@ public class GameClient<T> : BaseApp where T : BaseApp {
 		}
 
 		return 0;
+	}
+
+	protected async ValueTask<IGameState?> Frame(double dt) {
+		return await OnFrame(dt);
+	}
+
+	protected async ValueTask<IGameState?> OnFrame( double dt ) {
+		if( gameState == null ) return null;
+
+		var ret = await gameState.Update( dt );
+
+		if( renderer != null )
+			ret = await ret.Render( renderer );
+
+		return ret;
 	}
 }

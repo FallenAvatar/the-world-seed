@@ -8,7 +8,7 @@ using Serilog;
 
 namespace tws.game;
 public class BaseApp : IBaseApp {
-	protected ILogger Log { get; init; }
+	public ILogger Log { get; init; }
 
 	protected BaseApp(ILogger _logger) { Log = _logger; }
 	public void Dispose() { DisposeAsync().GetAwaiter().GetResult(); }

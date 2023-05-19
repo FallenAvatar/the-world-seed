@@ -15,7 +15,7 @@ public class Texture : IDisposable {
 	private uint _handle;
 	private GL _gl;
 
-	public string Path { get; set; }
+	public string? Path { get; set; }
 	public TextureType Type { get; }
 
 	public unsafe Texture( GL gl, string path, TextureType type = TextureType.None ) {

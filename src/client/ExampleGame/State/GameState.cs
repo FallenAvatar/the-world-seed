@@ -17,12 +17,13 @@ namespace ExampleGame.State;
 
 internal class GameState : BasePhysicsState {
 	private IWindow window;
-	private GL Gl;
-	private IKeyboard primaryKeyboard;
+	public IView GameWindow { get { return window; } }
+	private GL? Gl;
+	private IKeyboard? primaryKeyboard;
 
-	private tws.game.client.Texture Texture;
-	private tws.game.client.Shader Shader;
-	private tws.game.client.Model Model;
+	private tws.game.client.Texture? Texture;
+	private tws.game.client.Shader? Shader;
+	private tws.game.client.Model? Model;
 
 	//Setup the camera's location, directions, and movement speed
 	private Vector3 CameraPosition = new Vector3( 0.0f, 0.0f, 3.0f );
@@ -35,6 +36,7 @@ internal class GameState : BasePhysicsState {
 
 	//Used to track change in mouse movement to allow for moving of the Camera
 	private Vector2 LastMousePosition;
+	private double deltaTime;
 
 	public GameState() {
 		var options = WindowOptions.Default;
@@ -43,16 +45,14 @@ internal class GameState : BasePhysicsState {
 		window = Window.Create( options );
 
 		window.Load += OnLoad;
-		window.Update += OnUpdate;
-		window.Render += OnRender;
 		window.Closing += Dispose;
 	}
 
 	protected override async ValueTask DisposeAsyncCore() {
 		await base.DisposeAsyncCore();
-		Model.Dispose();
-		Shader.Dispose();
-		Texture.Dispose();
+		if( Model != null ) { Model.Dispose(); Model = null; }
+		if( Shader != null ) { Shader.Dispose(); Shader = null; }
+		if( Texture != null ) { Texture.Dispose(); Texture = null; }
 	}
 
 	protected void OnLoad() {
@@ -74,8 +74,12 @@ internal class GameState : BasePhysicsState {
 		Model = new tws.game.client.Model( Gl, @"assets\cube.model" );
 	}
 
-	private unsafe void OnUpdate( double deltaTime ) {
+	public override async Task<IGameState> Update( double dt ) {
+		deltaTime = dt;
+
 		var moveSpeed = 2.5f * (float)deltaTime;
+
+		if( primaryKeyboard == null ) return this;
 
 		if( primaryKeyboard.IsKeyPressed( Key.W ) ) {
 			//Move forwards
@@ -93,13 +97,19 @@ internal class GameState : BasePhysicsState {
 			//Move right
 			CameraPosition += Vector3.Normalize( Vector3.Cross( CameraFront, CameraUp ) ) * moveSpeed;
 		}
+
+		return this;
 	}
 
-	private unsafe void OnRender( double deltaTime ) {
+	public override unsafe async Task<IGameState> Render( IRenderer renderer ) {
+		if( Gl == null ) return this;
+
 		Gl.Enable( EnableCap.DepthTest );
 		Gl.Clear( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
 
+		if( Texture == null ) return this;
 		Texture.Bind();
+		if( Shader == null ) return this;
 		Shader.Use();
 		Shader.SetUniform( "uTexture0", 0 );
 
@@ -112,6 +122,7 @@ internal class GameState : BasePhysicsState {
 		//it creates rounding errors that result in viewport distortion
 		var projection = Matrix4x4.CreatePerspectiveFieldOfView( MathHelper.DegreesToRadians( CameraZoom ), (float)window.Size.X / (float)window.Size.Y, 0.1f, 100.0f );
 
+		if( Model == null ) return this;
 		foreach( var mesh in Model.Meshes ) {
 			mesh.Bind();
 			Shader.Use();
@@ -123,6 +134,8 @@ internal class GameState : BasePhysicsState {
 
 			Gl.DrawArrays( PrimitiveType.Triangles, 0, (uint)mesh.Vertices.Length );
 		}
+
+		return this;
 	}
 
 	private unsafe void OnMouseMove( IMouse mouse, Vector2 position ) {
@@ -164,10 +177,4 @@ internal class GameState : BasePhysicsState {
 
 		return ret;
 	}
-
-	public async virtual Task<IGameState> Render( IRenderer renderer ) {
-
-		return this;
-	}
-
 }
