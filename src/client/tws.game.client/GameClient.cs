@@ -31,11 +31,6 @@ public abstract class GameClient<T> : BaseApp where T : BaseApp {
 	}
 
 	public override async Task<int> Run() {
-		double startDT = DateTime.Now.UnixTimestamp();
-		double lastDT = startDT;
-		double currDT = lastDT;
-		double delta;
-
 		while( gameState != null ) {
 			bool isNoGC = GC.TryStartNoGCRegion( 1, 1, true );
 
@@ -55,8 +50,15 @@ public abstract class GameClient<T> : BaseApp where T : BaseApp {
 		return 0;
 	}
 
-	protected async ValueTask<IGameState?> Frame(double dt) {
-		return await OnFrame(dt);
+	private double? startDT;
+	private double? lastDT;
+	private double? currDT;
+	private double? delta;
+
+	protected async ValueTask<IGameState?> RunFrame() {
+		if( gameState == null ) return null;
+
+		return await OnFrame();
 	}
 
 	protected async ValueTask<IGameState?> OnFrame( double dt ) {

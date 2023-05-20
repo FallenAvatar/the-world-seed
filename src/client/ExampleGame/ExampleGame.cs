@@ -15,9 +15,7 @@ internal class ExampleGame : tws.game.client.GameClient<ExampleGame> {
 	}
 
 	public override async Task<int> Run() {
-		if( gameState != null ) {
-			gameState.Window.Run( () => { await base.Frame(); } );
-		}
+		if( gameState != null ) gameState.Window.Run( async() => { gameState = await RunFrame(); } );
 
 		return 0;
 	}
