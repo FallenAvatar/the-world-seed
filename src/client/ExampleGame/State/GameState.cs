@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
 using System.Threading.Tasks;
+
 using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 
-using Silk.NET.Windowing;
-
+using tws.game.client;
 using tws.game.client.Renderer;
 using tws.game.client.State;
 using tws.game.Utils;
@@ -16,11 +15,6 @@ using tws.game.Utils;
 namespace ExampleGame.State;
 
 internal class GameState : BasePhysicsState {
-	private IWindow window;
-	public IView GameWindow { get { return window; } }
-	private GL? Gl;
-	private IKeyboard? primaryKeyboard;
-
 	private tws.game.client.Texture? Texture;
 	private tws.game.client.Shader? Shader;
 	private tws.game.client.Model? Model;
@@ -38,74 +32,74 @@ internal class GameState : BasePhysicsState {
 	private Vector2 LastMousePosition;
 	private double deltaTime;
 
-	public GameState() {
-		var options = WindowOptions.Default;
-		options.Size = new Vector2D<int>( 800, 600 );
-		options.Title = "LearnOpenGL with Silk.NET";
-		window = Window.Create( options );
-
-		window.Load += OnLoad;
-		window.Closing += Dispose;
-	}
+	public GameState( GameClient game ) : base( game ) { }
 
 	protected override async ValueTask DisposeAsyncCore() {
 		await base.DisposeAsyncCore();
-		if( Model != null ) { Model.Dispose(); Model = null; }
-		if( Shader != null ) { Shader.Dispose(); Shader = null; }
-		if( Texture != null ) { Texture.Dispose(); Texture = null; }
+		if( Model != null ) { await Model.DisposeAsync(); Model = null; }
+		if( Shader != null ) { await Shader.DisposeAsync(); Shader = null; }
+		if( Texture != null ) { await Texture.DisposeAsync(); Texture = null; }
 	}
 
 	protected void OnLoad() {
-		IInputContext input = window.CreateInput();
-		primaryKeyboard = input.Keyboards.FirstOrDefault();
-		if( primaryKeyboard != null ) {
-			primaryKeyboard.KeyDown += KeyDown;
-		}
-		for( int i = 0; i < input.Mice.Count; i++ ) {
-			input.Mice[i].Cursor.CursorMode = CursorMode.Raw;
-			input.Mice[i].MouseMove += OnMouseMove;
-			input.Mice[i].Scroll += OnMouseWheel;
+		if( Game.Input == null ) return;
+
+		if( Game.Input.PrimaryKeyboard != null )
+			Game.Input.PrimaryKeyboard.KeyDown += KeyDown;
+		
+		//for( int i = 0; i < Game.Input.Mice.Count; i++ ) {
+		//	Game.Input.Mice[i].Cursor.CursorMode = CursorMode.Raw;
+		//	Game.Input.Mice[i].MouseMove += OnMouseMove;
+		//	Game.Input.Mice[i].Scroll += OnMouseWheel;
+		//}
+		foreach( var m in Game.Input.Mice ) {
+			m.Cursor.CursorMode = CursorMode.Raw;
+			m.MouseMove += OnMouseMove;
+			m.Scroll += OnMouseWheel;
 		}
 
-		Gl = GL.GetApi( window );
+		var Gl = Game.GL;
+		if( Gl == null ) throw new NullReferenceException( "GL instance must be initialized." );
 
 		Shader = new tws.game.client.Shader( Gl, @"assets\shader.vert", @"assets\shader.frag" );
 		Texture = new tws.game.client.Texture( Gl, @"assets\silk.png" );
 		Model = new tws.game.client.Model( Gl, @"assets\cube.model" );
 	}
 
-	public override async Task<IGameState> Update( double dt ) {
-		deltaTime = dt;
+	protected override async Task<IGameState> DoUpdate( double dt ) {
+		var moveSpeed = 2.5f * (float)dt;
 
-		var moveSpeed = 2.5f * (float)deltaTime;
+		if( Game.Input?.PrimaryKeyboard == null ) return this;
 
-		if( primaryKeyboard == null ) return this;
-
-		if( primaryKeyboard.IsKeyPressed( Key.W ) ) {
+		if( Game.Input.PrimaryKeyboard.IsKeyPressed( Key.W ) ) {
 			//Move forwards
 			CameraPosition += moveSpeed * CameraFront;
 		}
-		if( primaryKeyboard.IsKeyPressed( Key.S ) ) {
+		if( Game.Input.PrimaryKeyboard.IsKeyPressed( Key.S ) ) {
 			//Move backwards
 			CameraPosition -= moveSpeed * CameraFront;
 		}
-		if( primaryKeyboard.IsKeyPressed( Key.A ) ) {
+		if( Game.Input.PrimaryKeyboard.IsKeyPressed( Key.A ) ) {
 			//Move left
 			CameraPosition -= Vector3.Normalize( Vector3.Cross( CameraFront, CameraUp ) ) * moveSpeed;
 		}
-		if( primaryKeyboard.IsKeyPressed( Key.D ) ) {
+		if( Game.Input.PrimaryKeyboard.IsKeyPressed( Key.D ) ) {
 			//Move right
 			CameraPosition += Vector3.Normalize( Vector3.Cross( CameraFront, CameraUp ) ) * moveSpeed;
 		}
 
+		await Task.CompletedTask;
+
 		return this;
 	}
 
-	public override unsafe async Task<IGameState> Render( IRenderer renderer ) {
+	public override async Task<IGameState> Render( IRenderer renderer ) {
+		var Gl = Game.GL;
 		if( Gl == null ) return this;
+		if( Game.PlatformWindow == null ) return this;
 
-		Gl.Enable( EnableCap.DepthTest );
-		Gl.Clear( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
+		//Gl.Enable( EnableCap.DepthTest );
+		//Gl.Clear( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
 
 		if( Texture == null ) return this;
 		Texture.Bind();
@@ -114,13 +108,13 @@ internal class GameState : BasePhysicsState {
 		Shader.SetUniform( "uTexture0", 0 );
 
 		//Use elapsed time to convert to radians to allow our cube to rotate over time
-		var difference = (float)(window.Time * 100);
+		var difference = (float)deltaTime;
 
 		var model = Matrix4x4.CreateRotationY( MathHelper.DegreesToRadians( difference ) ) * Matrix4x4.CreateRotationX( MathHelper.DegreesToRadians( difference ) );
 		var view = Matrix4x4.CreateLookAt( CameraPosition, CameraPosition + CameraFront, CameraUp );
 		//It's super important for the width / height calculation to regard each value as a float, otherwise
 		//it creates rounding errors that result in viewport distortion
-		var projection = Matrix4x4.CreatePerspectiveFieldOfView( MathHelper.DegreesToRadians( CameraZoom ), (float)window.Size.X / (float)window.Size.Y, 0.1f, 100.0f );
+		var projection = Matrix4x4.CreatePerspectiveFieldOfView( MathHelper.DegreesToRadians( CameraZoom ), (float)Game.PlatformWindow.Size.X / (float)Game.PlatformWindow.Size.Y, 0.1f, 100.0f );
 
 		if( Model == null ) return this;
 		foreach( var mesh in Model.Meshes ) {
@@ -134,6 +128,8 @@ internal class GameState : BasePhysicsState {
 
 			Gl.DrawArrays( PrimitiveType.Triangles, 0, (uint)mesh.Vertices.Length );
 		}
+
+		await Task.CompletedTask;
 
 		return this;
 	}
@@ -167,14 +163,7 @@ internal class GameState : BasePhysicsState {
 
 	private void KeyDown( IKeyboard keyboard, Key key, int arg3 ) {
 		if( key == Key.Escape ) {
-			window.Close();
+			Game.Close();
 		}
-	}
-
-	protected override async Task<IGameState> DoUpdate( double dt ) {
-		IGameState ret = this;
-
-
-		return ret;
 	}
 }

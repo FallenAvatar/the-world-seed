@@ -10,7 +10,6 @@ using tws.game.client.Renderer;
 
 namespace tws.game.client.State;
 public interface IGameState : IDisposable, IAsyncDisposable {
-	public IView Window { get; }
 	public Task<IGameState> Update( double dt );
 	public Task<IGameState> Render( IRenderer renderer );
 }

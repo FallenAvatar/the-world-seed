@@ -21,4 +21,12 @@ public static class DateTimeExtensions {
 	public static double UnixTimestampUTC( this DateTime dt ) {
 		return (dt - CheckedEpochUTC).TotalSeconds;
 	}
+
+	public static double UnixTimestamp( this DateTime dt, DateTime baseTime ) {
+		return (dt - baseTime).TotalSeconds;
+	}
+
+	public static double UnixTimestampUTC( this DateTime dt, DateTime baseTime ) {
+		return (dt - baseTime).TotalSeconds;
+	}
 }

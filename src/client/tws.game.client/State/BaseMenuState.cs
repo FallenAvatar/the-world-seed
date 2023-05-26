@@ -7,7 +7,5 @@ using System.Threading.Tasks;
 namespace tws.game.client.State;
 public abstract class BaseMenuState : BaseGameState {
 
-	public BaseMenuState() { PhysicsUpdatesPerSecond = 10.0; }
-
-	protected override async ValueTask DisposeAsyncCore() { await base.DisposeAsyncCore(); }
+	public BaseMenuState( GameClient game ) : base( game ) { PhysicsUpdatesPerSecond = 10.0; }
 }

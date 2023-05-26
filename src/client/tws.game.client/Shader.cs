@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 using Silk.NET.OpenGL;
 
+using tws.game.client.Renderer;
+
 namespace tws.game.client;
-public class Shader : IDisposable {
+public class Shader : BaseAsset {
 	private uint _handle;
 	private GL _gl;
 
@@ -61,7 +63,8 @@ public class Shader : IDisposable {
 		_gl.Uniform1( location, value );
 	}
 
-	public void Dispose() {
+	protected override async ValueTask DisposeAsyncCore() {
+		await base.DisposeAsyncCore();
 		_gl.DeleteProgram( _handle );
 	}
 

@@ -8,15 +8,7 @@ using tws.game.client.State;
 
 namespace ExampleGame;
 internal class ExampleGame : tws.game.client.GameClient<ExampleGame> {
-	public ExampleGame( ILogger _logger ) : base( _logger, new State.GameState() ) { }
+	public ExampleGame( ILogger _logger ) : base( _logger ) { }
 
-	public override async Task Init( string[] args ) {
-		await base.Init( args );
-	}
-
-	public override async Task<int> Run() {
-		if( gameState != null ) gameState.Window.Run( async() => { gameState = await RunFrame(); } );
-
-		return 0;
-	}
+	protected override IGameState GetDefaultGameState() { return new State.GameState( this ); }
 }

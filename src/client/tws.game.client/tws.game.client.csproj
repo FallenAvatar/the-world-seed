@@ -19,8 +19,4 @@
     <ProjectReference Include="..\..\shared\tws.game\tws.game.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Input\" />
-  </ItemGroup>
-
 </Project>

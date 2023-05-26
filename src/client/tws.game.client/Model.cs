@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 
 using Silk.NET.Assimp;
 using Silk.NET.OpenGL;
 
+using tws.game.client.Renderer;
+
 namespace tws.game.client;
-public class Model : IDisposable {
+public class Model : BaseAsset {
 	public Model( GL gl, string path, bool gamma = false ) {
 		var assimp = Assimp.GetApi();
 		_assimp = assimp;
@@ -177,7 +180,8 @@ public class Model : IDisposable {
 		return indices.ToArray();
 	}
 
-	public void Dispose() {
+	protected override async ValueTask DisposeAsyncCore() {
+		await base.DisposeAsyncCore();
 		foreach( var mesh in Meshes ) {
 			mesh.Dispose();
 		}

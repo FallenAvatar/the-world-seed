@@ -10,8 +10,10 @@ using Silk.NET.OpenGL;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
+using tws.game.client.Renderer;
+
 namespace tws.game.client;
-public class Texture : IDisposable {
+public class Texture : BaseAsset {
 	private uint _handle;
 	private GL _gl;
 
@@ -68,7 +70,8 @@ public class Texture : IDisposable {
 		_gl.BindTexture( TextureTarget.Texture2D, _handle );
 	}
 
-	public void Dispose() {
+	protected override async ValueTask DisposeAsyncCore() {
+		await base.DisposeAsyncCore();
 		_gl.DeleteTexture( _handle );
 	}
 }

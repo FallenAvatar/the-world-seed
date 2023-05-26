@@ -32,6 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\shared\tws.game\tws.game.csproj" />
     <ProjectReference Include="..\tws.game.client\tws.game.client.csproj" />
   </ItemGroup>
