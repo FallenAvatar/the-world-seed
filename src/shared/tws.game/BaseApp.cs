@@ -18,7 +18,10 @@ public class BaseApp : IBaseApp {
 	public async virtual Task Init( string[] args ) { await Task.CompletedTask; }
 
 	public async virtual Task Quit(bool fromException = false) { await Task.CompletedTask; }
-	
+
+	public async virtual Task Load() {
+		await Task.CompletedTask;
+	}
 	public async virtual Task<int> Run() {
 		await Task.CompletedTask;
 

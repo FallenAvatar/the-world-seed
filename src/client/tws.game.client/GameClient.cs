@@ -17,8 +17,7 @@ using tws.game.Extensions;
 
 namespace tws.game.client;
 public abstract class GameClient : BaseApp {
-	protected GL? Gl;
-	public GL? GL { get { return Gl; } }
+	public GL? GL { get; protected set; }
 	public IInputSystem? Input { get; protected set; }
 	protected IRenderer? renderer = null;
 	protected IGameState? gameState;
@@ -48,7 +47,7 @@ public abstract class GameClient : BaseApp {
 		} );
 		Log.Information( "Window Created." );
 
-		PlatformWindow.Load += OnLoad;
+		PlatformWindow.Load += Load;
 		PlatformWindow.Closing += Close;
 
 		await Task.Run( () => {
@@ -74,12 +73,13 @@ public abstract class GameClient : BaseApp {
 		return 0;
 	}
 
-	protected void OnLoad() {
+	public override async Task Load() {
 		Log.Information("Window Loaded.");
 		if( PlatformWindow == null ) throw new Exception("This should be impossible...");
+		if( gameState != null ) { await gameState.Load(); }
 		Input = new SilkInputSystem( PlatformWindow.CreateInput() );
 		
-		Gl = GL.GetApi( PlatformWindow );
+		GL = GL.GetApi( PlatformWindow );
 	}
 
 	const double minFrameTime = (double)(1M / 75M);
@@ -87,8 +87,6 @@ public abstract class GameClient : BaseApp {
 	protected async ValueTask<IGameState?> RunFrame() {
 		double frameStart = DateTime.Now.UnixTimestamp();
 		bool isNoGC = GC.TryStartNoGCRegion( 1, 1, false );
-
-		
 
 		TimeSpan lastDelta = currDelta;
 		currDelta = DateTime.Now - startDT;
@@ -119,8 +117,8 @@ public abstract class GameClient : BaseApp {
 
 		currGameState = await currGameState.Update( dt );
 
-		if( renderer != null && currGameState == gameState ) {
-			GL.ClearColor( Color.Black );
+		if( /*renderer != null &&*/ currGameState == gameState ) {
+			GL.ClearColor( Color.Pink );
 			GL.Enable( EnableCap.DepthTest );
 			GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit );
 			currGameState = await currGameState.Render( renderer );
@@ -131,7 +129,7 @@ public abstract class GameClient : BaseApp {
 		return currGameState;
 	}
 
-	public void Close() {
+	public async Task Close() {
 		CloseAsync().GetAwaiter().GetResult();
 	}
 

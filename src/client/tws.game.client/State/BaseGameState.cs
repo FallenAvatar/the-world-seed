@@ -18,6 +18,7 @@ public abstract class BaseGameState : IGameState {
 	public void Dispose() { DisposeAsync().GetAwaiter().GetResult(); }
 	public async ValueTask DisposeAsync() { await DisposeAsyncCore().ConfigureAwait( false ); GC.SuppressFinalize( this ); }
 	protected virtual async ValueTask DisposeAsyncCore() { await Task.CompletedTask; }
+	public abstract Task Load();
 
 	public abstract Task<IGameState> Render( IRenderer renderer );
 

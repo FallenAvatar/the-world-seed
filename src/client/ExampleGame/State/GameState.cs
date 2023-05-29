@@ -41,7 +41,7 @@ internal class GameState : BasePhysicsState {
 		if( Texture != null ) { await Texture.DisposeAsync(); Texture = null; }
 	}
 
-	protected void OnLoad() {
+	public override async Task Load() {
 		if( Game.Input == null ) return;
 
 		if( Game.Input.PrimaryKeyboard != null )
@@ -163,7 +163,7 @@ internal class GameState : BasePhysicsState {
 
 	private void KeyDown( IKeyboard keyboard, Key key, int arg3 ) {
 		if( key == Key.Escape ) {
-			Game.Close();
+			_ = Game.Close();
 		}
 	}
 }
